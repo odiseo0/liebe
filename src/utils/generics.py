@@ -1,7 +1,7 @@
 from typing import Union
 from collections import Counter
 
-from .structures import NUCLEOTIDES, DNA_REVERSE_COMPLEMENT
+from .structures import NUCLEOTIDES
 
 # TODO: Replace Union by new Python 3.10 syntax: str | bool
 def is_valid_sequence(seq: str) -> Union[str, bool]:
@@ -11,7 +11,7 @@ def is_valid_sequence(seq: str) -> Union[str, bool]:
     for n in seq:
         if n not in NUCLEOTIDES:
             return False
-
+            
     return seq
 
 def count_frequency(seq: str) -> dict[str, int]:
@@ -24,4 +24,5 @@ def transcript(seq: str) -> str:
 
 def reverse_seq(seq: str) -> str:
     """Swap adenine with thymine, guanine with cytosine and reverse DNA sequence."""
-    return ''.join([DNA_REVERSE_COMPLEMENT[n] for n in seq])[::-1]
+    mapping = str.maketrans("ATCG", "TAGC")
+    return seq.translate(mapping)[::-1]
